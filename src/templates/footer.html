@@ -1,0 +1,46 @@
+
+</div>
+<!-- //content -->
+  <div class="row" id="bottom-menu" style="border:0px solid red">
+    <div class="col-sm-4" id="col1">
+
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="">...</a></li>
+        <li></li>
+      </ul>
+
+
+
+      
+
+
+    </div>
+    <!-- //col1 -->
+    <div class="col-sm-4" id="col2">
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="">Last phishing</a></li>
+        {% for last in arr%}
+        <li><a href="/hoster/{last.hosterid}">{last.hostername}</a></li>
+        {%endfor%}
+      </ul>
+    </div>
+    <!-- //col2 -->
+    <div class="col-sm-4" id="col3">
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="">About us</a></li>
+        <li><a href="/about">About us</a></li>
+        <li><a href="/donate">Donate</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <!-- //col3 -->
+  </div>
+  <!-- //bottom-menu -->
+  <div class="row" id="footer" style="border:0px solid red;text-align:center">
+    &copy;2017 Phishing-tracker
+  </div>
+  <!-- //footer -->
+</div>
+<!-- //container-fluid -->
+</body>
+</html>

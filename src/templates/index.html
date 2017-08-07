@@ -1,0 +1,80 @@
+{% include 'header.html' %}
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/datamaps/0.5.8/datamaps.all.js"></script>
+
+<div id="containermap" style="margin-left: auto; margin-right: auto; width: 800px; height:575px;border:0px solid red"></div>
+<script>
+    var map = new Datamap({element: document.getElementById('containermap'),
+      projection: 'mercator',
+
+fills: {
+            L9: '#0a2258',
+            L8: '#0c3d8a',
+            L7: '#1c5ba6',
+            L6: '#357eb9',
+            L5: '#5a9ecc',
+            L4: '#8ebeda',
+            L3: '#bad2eb',
+            L2: '#d7e6f5',
+            L1: '#f5faff',
+            aL9: '#521a08',
+            aL8: '#852407',
+            aL7: '#be3707',
+            aL6: '#e55a12',
+            aL5: '#fb8620',
+            aL4: '#fcb93f',
+            aL3: '#fdde7f',
+            aL2: '#fff7ae',
+            aL1: '#ffffdf',
+
+            UNKNOWN: 'rgb(0,0,0)',
+            defaultFill: '#F5F5F5'
+        },
+        data: {
+{% if arrPhishing %}
+ {% for i in arrPhishing %}
+            {{i.symbol}}: {
+                fillKey: 
+                {% if i.cnt>8%} 'L9'{%endif%}
+                {% if i.cnt<=8 and i.cnt>7%} 'L8'{%endif%}
+                {% if i.cnt<=7 and i.cnt>6%} 'L7'{%endif%}
+                {% if i.cnt<=6 and i.cnt>5%} 'L6'{%endif%}
+                {% if i.cnt<=5 and i.cnt>4%} 'L5'{%endif%}
+
+                {% if i.cnt<=4 and i.cnt>3%} 'L4'{%endif%}
+                {% if i.cnt<=3 and i.cnt>2%} 'L3'{%endif%}
+                {% if i.cnt<=2 and i.cnt>1%} 'L2'{%endif%}
+                {% if i.cnt==1%} 'L1'{%endif%},
+                numberOfThings: {{i.cnt}}
+            },
+ {%endfor%}
+{% endif %}
+        },
+        geographyConfig: {
+            borderColor: '#DEDEDE',
+            highlightBorderWidth: 2,
+            // don't change color on mouse hover
+            highlightFillColor: function(geo) {
+                return geo['fillColor'] || '#F5F5F5';
+            },
+            // only change border
+            highlightBorderColor: '#B7B7B7',
+            // show desired information in tooltip
+            popupTemplate: function(geo, data) {
+                // don't show tooltip if country don't present in dataset
+                if (!data) { return ; }
+                // tooltip content
+                return ['<div class="hoverinfo">',
+                    '<strong>', geo.properties.name, '</strong>',
+                    '<br>Count: <strong>', data.numberOfThings, '</strong>',
+                    '</div>'].join('');
+            }
+          }
+
+  });
+</script>
+</div>
+<!-- //containermap -->
+{% include 'footer.html' %}
